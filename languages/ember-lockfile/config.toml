@@ -3,7 +3,6 @@ grammar = "ember_lockfile"
 path_suffixes = ["ember.lock"]
 first_line_pattern = "^\\s*\\{"
 line_comments = []
-icon = "ember_lockfile.svg"
 tab_size = 2
 hard_tabs = false
 

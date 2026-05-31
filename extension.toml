@@ -15,15 +15,15 @@ version = "0.2.0"
 
 [grammars.ember]
 repository = "https://github.com/EmberLang/tree-sitter-ember"
-rev = "main"
+rev = "master"
 
 [grammars.ember_manifest]
 repository = "https://github.com/EmberLang/tree-sitter-manifest"
-rev = "main"
+rev = "master"
 
 [grammars.ember_lockfile]
 repository = "https://github.com/EmberLang/tree-sitter-lockfile"
-rev = "main"
+rev = "master"
 
 [language_servers.emberls]
 languages = ["Ember"]

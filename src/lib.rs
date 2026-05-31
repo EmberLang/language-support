@@ -1,11 +1,11 @@
 use zed_extension_api as zed;
 
-struct FerretExtension;
+struct EmberExtension;
 
-impl zed::Extension for FerretExtension {
+impl zed::Extension for EmberExtension {
     fn new() -> Self {
         Self
     }
 }
 
-zed::register_extension!(FerretExtension);
+zed::register_extension!(EmberExtension);
