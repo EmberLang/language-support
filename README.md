@@ -8,7 +8,7 @@ This extension currently provides:
 - syntax highlighting
 - bracket matching
 - indentation rules
-- `.fer` file recognition
+- `.em` file recognition
 - LSP wiring (`ember lsp`)
 
 ## LSP command resolution

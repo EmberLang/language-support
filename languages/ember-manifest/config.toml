@@ -1,6 +1,6 @@
 name = "Ember Manifest"
 grammar = "ember_manifest"
-path_suffixes = ["fer.ret"]
+path_suffixes = [".ember"]
 first_line_pattern = "^\\s*\\[package\\]"
 line_comments = ["# "]
 tab_size = 2
