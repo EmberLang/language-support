@@ -1,6 +1,6 @@
 name = "Ember"
 grammar = "ember"
-path_suffixes = [".em"]
+path_suffixes = ["em"]
 line_comments = ["// "]
 block_comments = [["/*", "*/"]]
 tab_size = 4

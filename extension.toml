@@ -24,9 +24,3 @@ rev = "master"
 [grammars.ember_lockfile]
 repository = "https://github.com/EmberLang/tree-sitter-lockfile"
 rev = "master"
-
-[language_servers.emberls]
-languages = ["Ember"]
-
-[language_servers.emberls.language_ids]
-Ember = "ember"
