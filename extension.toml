@@ -1,0 +1,32 @@
+id = "ember"
+name = "Ember language support"
+description = "Ember language support for Zed"
+version = "0.0.1"
+schema_version = 1
+authors = ["itsfuad"]
+repository = "https://github.com/EmberLang/ember-language-support"
+
+languages = ["languages/ember", "languages/ember-manifest", "languages/ember-lockfile"]
+capabilities = []
+
+[lib]
+kind = "Rust"
+version = "0.2.0"
+
+[grammars.ember]
+repository = "https://github.com/EmberLang/tree-sitter-ember"
+rev = "main"
+
+[grammars.ember_manifest]
+repository = "https://github.com/EmberLang/tree-sitter-manifest"
+rev = "main"
+
+[grammars.ember_lockfile]
+repository = "https://github.com/EmberLang/tree-sitter-lockfile"
+rev = "main"
+
+[language_servers.emberls]
+languages = ["Ember"]
+
+[language_servers.emberls.language_ids]
+Ember = "ember"
