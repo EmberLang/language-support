@@ -16,6 +16,7 @@
   "fn"
   "impl"
   "copy"
+  "move"
   "struct"
   "interface"
   "enum"
@@ -26,6 +27,7 @@
   "match"
   "for"
   "while"
+  "is"
   "break"
   "continue"
   "return"
@@ -38,11 +40,8 @@
   "panic"
   "lock"
   "unsafe"
+  "map"
 ] @keyword
-
-(move) @keyword
-(is) @keyword
-(map) @keyword
 
 [
   "="
@@ -142,7 +141,7 @@
   "f32" "f64" "void"))
 
 ((identifier) @keyword
- (#any-of? @keyword "self" "is" "map"))
+ (#any-of? @keyword "self"))
 
 (function_declaration
   name: (identifier) @function)
