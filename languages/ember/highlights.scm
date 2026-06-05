@@ -16,7 +16,6 @@
   "fn"
   "impl"
   "copy"
-  "move"
   "struct"
   "interface"
   "enum"
@@ -27,7 +26,6 @@
   "match"
   "for"
   "while"
-  "is"
   "break"
   "continue"
   "return"
@@ -40,8 +38,11 @@
   "panic"
   "lock"
   "unsafe"
-  "map"
 ] @keyword
+
+(move) @keyword
+(is) @keyword
+(map) @keyword
 
 [
   "="
