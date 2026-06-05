@@ -4,10 +4,20 @@
   "import" @context
   path: (_) @name) @item
 
-(type_declaration
-  "type" @context
-  type_parameters: (type_parameter_list)? @context
-  name: (identifier) @name) @item
+(struct_declaration
+  "struct" @context
+  name: (identifier) @name
+  type_parameters: (type_parameter_list)? @context) @item
+
+(interface_declaration
+  "interface" @context
+  name: (identifier) @name
+  type_parameters: (type_parameter_list)? @context) @item
+
+(enum_declaration
+  "enum" @context
+  name: (identifier) @name
+  type_parameters: (type_parameter_list)? @context) @item
 
 (const_declaration
   "const" @context
@@ -19,35 +29,13 @@
     "mut"? @context
     name: (identifier) @name)) @item
 
-(test_declaration
-  "test" @context
-  name: (string_literal) @name) @item
+(impl_declaration
+  "impl" @context
+  target: (_) @name) @item
 
-; Free functions
-(function_declaration
-  !owner
-  "unsafe"? @context
-  "fn" @context
-  name: (identifier) @name
-  type_parameters: (type_parameter_list)? @context
-  parameters: (parameter_list) @context
-  result: (_) @context) @item
-
-(function_declaration
-  !owner
-  !result
-  "unsafe"? @context
-  "fn" @context
-  name: (identifier) @name
-  type_parameters: (type_parameter_list)? @context
-  parameters: (parameter_list) @context) @item
-
-; Attached methods: fn Type::Method(...)
 (function_declaration
   "unsafe"? @context
   "fn" @context
-  owner: (_) @context
-  "::" @context
   name: (identifier) @name
   type_parameters: (type_parameter_list)? @context
   parameters: (parameter_list) @context
@@ -57,13 +45,12 @@
   !result
   "unsafe"? @context
   "fn" @context
-  owner: (_) @context
-  "::" @context
   name: (identifier) @name
   type_parameters: (type_parameter_list)? @context
   parameters: (parameter_list) @context) @item
 
 ; Type members
+
 (field_declaration
   name: (identifier) @name
   type: (_) @context) @item
@@ -77,14 +64,3 @@
   !result
   name: (identifier) @name
   parameters: (parameter_list) @context) @item
-
-; Enum / error members inside type declarations
-(type_declaration
-  name: (identifier) @context
-  value: (enum_type
-    (identifier) @name @item))
-
-(type_declaration
-  name: (identifier) @context
-  value: (error_type
-    (identifier) @name @item))

@@ -14,8 +14,7 @@
   "let"
   "mut"
   "fn"
-  "test"
-  "type"
+  "impl"
   "copy"
   "struct"
   "interface"
@@ -39,7 +38,6 @@
   "panic"
   "lock"
   "unsafe"
-  "self"
 ] @keyword
 
 (move) @keyword
@@ -57,7 +55,6 @@
   "!!"
   "?"
   "??"
-  "&"
   "^"
   "+"
   "++"
@@ -81,40 +78,38 @@
   "=>"
 ] @operator
 
-
 ["(" ")" "[" "]" "{" "}"] @punctuation.bracket
 ["," ";" ":" "."] @punctuation.delimiter
 
-; In `start..end:step`, treat step separator as an operator.
 (range_expression ":" @operator)
 
 (attribute
   name: (identifier) @attribute)
 
-(type_declaration
+(struct_declaration
   name: (identifier) @type)
 
-(function_declaration
-  owner: (identifier) @type)
+(interface_declaration
+  name: (identifier) @type)
 
-(function_declaration
-  owner: (scoped_identifier
-    name: (identifier) @type))
+(enum_declaration
+  name: (identifier) @type)
 
-(function_declaration
-  owner: (generic_type
-    name: (identifier) @type))
+(impl_declaration
+  target: (named_type (identifier) @type))
 
-(function_declaration
-  owner: (generic_type
-    name: (scoped_identifier
+(impl_declaration
+  target: (named_type
+    (scoped_identifier
       name: (identifier) @type)))
 
 (named_type (identifier) @type
  (#not-eq? @type "map"))
+
 (generic_type
   name: (identifier) @type
   (#not-eq? @type "map"))
+
 (generic_type
   name: (scoped_identifier
     name: (identifier) @type))
@@ -139,29 +134,6 @@
     scope: (scoped_identifier
       name: (identifier) @type)))
 
-(composite_literal
-  type: (named_type (identifier) @type))
-
-(composite_literal
-  type: (named_type
-    (scoped_identifier
-      name: (identifier) @type)))
-
-(typed_composite_literal
-  type: (map_type) @type)
-
-(typed_composite_literal
-  type: (named_type (identifier) @type))
-
-(typed_composite_literal
-  type: (generic_type
-    name: (identifier) @type))
-
-(typed_composite_literal
-  type: (generic_type
-    name: (scoped_identifier
-      name: (identifier) @type)))
-
 ((identifier) @type.builtin
  (#any-of? @type.builtin
   "bool" "char" "string" "Self"
@@ -174,9 +146,6 @@
 
 (function_declaration
   name: (identifier) @function)
-
-(test_declaration
-  "test" @keyword)
 
 (interface_method
   name: (identifier) @function)
@@ -203,7 +172,6 @@
   function: (selector_expression
     field: (identifier) @function))
 
-; Recovery highlighting for invalid empty generic calls like `foo<>()`.
 (ERROR
   (identifier) @function
   (argument_list))
@@ -243,8 +211,6 @@
 
 (type_parameter
   name: (identifier) @type)
-
-(self_parameter) @keyword
 
 (labeled_statement
   label: (identifier) @label)
