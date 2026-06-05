@@ -26,7 +26,6 @@
   "match"
   "for"
   "while"
-  "is"
   "break"
   "continue"
   "return"
@@ -39,8 +38,10 @@
   "panic"
   "lock"
   "unsafe"
-  "map"
 ] @keyword
+
+(is) @keyword
+(map) @keyword
 
 [
   "="
