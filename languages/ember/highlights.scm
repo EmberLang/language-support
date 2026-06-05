@@ -16,7 +16,6 @@
   "fn"
   "impl"
   "copy"
-  "move"
   "struct"
   "interface"
   "enum"
