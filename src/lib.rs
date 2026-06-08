@@ -1,10 +1,87 @@
-use zed_extension_api as zed;
+use zed_extension_api::{self as zed, settings::LspSettings, LanguageServerId, Result};
+
+struct EmberBinary {
+    path: String,
+    args: Option<Vec<String>>,
+}
 
 struct EmberExtension;
+
+impl EmberExtension {
+    const LANGUAGE_SERVER_ID: &'static str = "emberls";
+
+    fn language_server_binary(
+        &self,
+        _language_server_id: &LanguageServerId,
+        worktree: &zed::Worktree,
+    ) -> Result<EmberBinary> {
+        let binary_settings = LspSettings::for_worktree(Self::LANGUAGE_SERVER_ID, worktree)
+            .ok()
+            .and_then(|settings| settings.binary);
+        let binary_args = binary_settings
+            .as_ref()
+            .and_then(|settings| settings.arguments.clone());
+
+        if let Some(path) = binary_settings
+            .as_ref()
+            .and_then(|settings| settings.path.as_ref())
+            .filter(|path| !path.trim().is_empty())
+            .cloned()
+        {
+            return Ok(EmberBinary {
+                path,
+                args: binary_args,
+            });
+        }
+
+        if let Some(path) = worktree.which("ember") {
+            return Ok(EmberBinary {
+                path,
+                args: binary_args,
+            });
+        }
+
+        Err("The Ember language server binary (ember) is not available in your environment (PATH). Configure `lsp.ember.binary.path` or install `ember`.".to_string())
+    }
+}
 
 impl zed::Extension for EmberExtension {
     fn new() -> Self {
         Self
+    }
+
+    fn language_server_command(
+        &mut self,
+        language_server_id: &LanguageServerId,
+        worktree: &zed::Worktree,
+    ) -> Result<zed::Command> {
+        let binary = self.language_server_binary(language_server_id, worktree)?;
+
+        Ok(zed::Command {
+            command: binary.path,
+            args: binary.args.unwrap_or_else(|| vec!["lsp".to_string()]),
+            env: worktree.shell_env(),
+        })
+    }
+
+    fn language_server_initialization_options(
+        &mut self,
+        language_server_id: &LanguageServerId,
+        worktree: &zed::Worktree,
+    ) -> Result<Option<zed::serde_json::Value>> {
+        let settings =
+            LspSettings::for_worktree(language_server_id.as_ref(), worktree).unwrap_or_default();
+        Ok(settings.initialization_options)
+    }
+
+    fn language_server_workspace_configuration(
+        &mut self,
+        language_server_id: &LanguageServerId,
+        worktree: &zed::Worktree,
+    ) -> Result<Option<zed::serde_json::Value>> {
+        let settings =
+            LspSettings::for_worktree(language_server_id.as_ref(), worktree).unwrap_or_default();
+        Ok(settings.settings)
     }
 }
 
